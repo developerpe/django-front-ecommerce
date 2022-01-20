@@ -1,0 +1,127 @@
+{% extends 'index.html' %}
+
+{% load static %}
+
+{% block extra_css %}
+<link href="https://unpkg.com/bootstrap-table@1.19.1/dist/bootstrap-table.min.css" rel="stylesheet">
+<link rel="stylesheet" href=" {% static 'css/jquery.dataTables.min.css' %}">
+{% endblock extra_css %}
+
+{% block body %}
+<div class="normal-table-list">
+    <div class="basic-tb-hd">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="col-lg-8">
+                    <h2>Listado de Indicadores</h2>
+                    <p>Indicadores registrados disponibles.</p>
+                </div>
+                <div class="col-lg-4">
+                    <button type="button" class="btn btn-primary" style="float: right;" data-toggle="modal"
+                        data-target="#creationModal">
+                        Agregar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table id="table" 
+            data-sort-class="table-active" 
+            data-sortable="true" 
+            data-toggle="table"
+            data-ajax-options="ajaxOptions" 
+            data-url="http://localhost:8001/products/indicators/"
+            data-search="true" 
+            data-side-pagination="server" 
+            data-pagination="true" 
+            data-select-item-name="id">
+            <thead>
+                <tr>
+                    <th data-field="id" data-visible="false">ID</th>
+                    <th data-field="descount_value">Descuento</th>
+                    <th data-field="category_product">Categoria</th>
+                    <th data-field="action" data-formatter="actionFormatter" data-events="actionEvents"
+                        data-footer-formatter="footerFormatter">
+                        Acciones
+                    </th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+<div class="modal fade" id="creationModal" role="dialog">
+    <div class="modal-dialog modals-default">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h2>Registro de un Indicador</h2>
+                <form method="POST" id="creation_form">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="descount_value">Descuento</label>
+                        <input type="number" class="form-control" id="descount_value" name="descount_value"
+                            placeholder="Descuento" value="0" min="0">
+                        <p id="descount_value_error" class="error"></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="descount_value">Categoría</label>
+                        <select class="form-control" name="category_product" id="category_product">                            
+                        </select>
+                        <p id="category_product_error" class="error"></p>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" onclick="addIndicator();">Registrar</button>
+                <button type="button" class="btn btn-danger" onclick="closeCreationModal();">Cancelar</button>
+                <button id="close_modal_creation" type="button" hidden data-dismiss="modal">Hide</button>
+            </div>
+        </div>
+    </div>
+</div>
+<button id="openUpdateModal" type="button" hidden data-toggle="modal" data-target="#updateModal"></button>
+
+<div class="modal fade" id="updateModal" role="dialog">
+    <div class="modal-dialog modals-default">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h2>Edición de Indicador <span id="categoria"></span> </h2>
+                <form method="POST" id="update_form">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="descount_value">Descuento</label>
+                        <input type="number" class="form-control" id="id_descount_value" name="descount_value" placeholder="Descuento"
+                            value="0" min="0">
+                        <p id="descount_value_error" class="error"></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="descount_value">Categoría</label>
+                        <select class="form-control" name="category_product" id="id_category_product">
+                        </select>
+                        <p id="category_product_error" class="error"></p>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" onclick="updateIndicator();">Editar</button>
+                <button type="button" class="btn btn-danger" onclick="closeUpdateModal();">Cancelar</button>
+                <button id="close_modal_update" type="button" hidden data-dismiss="modal">Hide</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}
+
+{% block extra_js %}
+<script src="{% static 'js/data-table/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'js/data-table/data-table-act.js' %}"></script>
+<script src="https://unpkg.com/bootstrap-table@1.19.1/dist/bootstrap-table.min.js"></script>
+<script src="{% static 'js/local/products/indicators.js' %}"></script>
+{% endblock extra_js %}
