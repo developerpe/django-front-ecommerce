@@ -1,0 +1,265 @@
+{% extends 'index.html' %}
+
+{% load static %}
+
+{% block body %}
+<div class="normal-table-list">
+    <div class="basic-tb-hd">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="col-lg-8">
+                    <h2>Registro de Facturas</h2>
+                    <p>Debe ingresar el número de RUC o la Razón Social del Proveedor para continuar.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-8 col-sm-8">
+            <div class="form-group ic-cmp-int form-elet-mg">
+                <div class="form-ic-cmp">
+                    <i class="notika-icon notika-edit"></i>
+                </div>
+                <div class="nk-int-st">
+                    <input type="text" maxlength="11" class="form-control" placeholder="RUC o Razón Social" name="ruc"
+                        id="id_ruc">
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2 col-sm-2">
+            <button type="button" class="btn btn-primary" onclick="searchSupplier();">Buscar</button>
+        </div>
+        <div class="col-lg-2 col-sm-2">
+            <button type="button" class="btn btn-primary hide" id="id_new_supplier" data-toggle="modal"
+                data-target="#creationModal">Registrar</button>
+        </div>
+    </div>
+</div>
+
+
+<div class="breadcomb-list" id="supplier_found" style="display: none;">
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="breadcomb-wp">
+                <div class="breadcomb-icon">
+                    <i class="notika-icon notika-phone"></i>
+                </div>
+                <div class="breadcomb-ctn">
+                    <h2 id="id_business_name">Felipe Perez</h2>
+                    <p id="ruc"> 646523132135 : <span class="bread-ntd" id="id_address">Av. Petituars 205</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="form-example-wrap mg-t-30">
+            <div class="cmp-tb-hd cmp-int-hd">
+                <h2>Nueva Factura</h2>
+            </div>
+            <div class="form-example-int form-horizental mg-t-15">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
+                            <label class="hrzn-fm">Número Factura</label>
+                        </div>
+                        <div class="col-lg-8 col-md-7 col-sm-7 col-xs-12">
+                            <div class="nk-int-st">
+                                <input id="voucher_number" name="voucher_number" type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-example-int form-horizental">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
+                            <label class="hrzn-fm">Fecha de Emisión</label>
+                        </div>
+                        <div class="col-lg-8 col-md-7 col-sm-7 col-xs-12">
+                            <div class="nk-int-st">
+                                <input id="date" name="date" type="text" class="form-control" placeholder="dd/mm/yyyy">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-example-int form-horizental mg-t-15">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
+                            <label class="hrzn-fm">Producto</label>
+                        </div>
+                        <div class="col-lg-8 col-md-7 col-sm-7 col-xs-12">
+                            <div class="chosen-select-act fm-cmp-mg">
+                                <select id="product" name="product" class="chosen"
+                                    data-placeholder="Choose a Country..." style="display: none;">
+                                    <option value="United States">United States</option>
+                                    <option value="United Kingdom">United Kingdom</option>
+                                    <option value="Afghanistan">Afghanistan</option>
+                                    <option value="Aland Islands">Aland Islands</option>
+                                    <option value="Albania">Albania</option>
+                                    <option value="Algeria">Algeria</option>
+                                    <option value="American Samoa">American Samoa</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-example-int form-horizental mg-t-15">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
+                            <label class="hrzn-fm">Tipo de Comprobante</label>
+                        </div>
+                        <div class="col-lg-8 col-md-7 col-sm-7 col-xs-12">
+                            <div class="nk-int-st">
+                                <div class="chosen-select-act fm-cmp-mg">
+                                    <select class="form-control chosen" name="voucher" id="voucher"
+                                        data-placeholder="Seleccione un Tipo de Comprobante..." style="display: none;">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-example-int form-horizental mg-t-15">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
+                            <label class="hrzn-fm">Medio de Pago</label>
+                        </div>
+                        <div class="col-lg-8 col-md-7 col-sm-7 col-xs-12">
+                            <div class="nk-int-st">
+                                <div class="chosen-select-act fm-cmp-mg">
+                                    <select class="form-control chosen" name="payment_type" id="payment_type"
+                                        data-placeholder="Seleccione un Medio de Pago..." style="display: none;">
+                                    </select>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-example-int form-horizental mg-t-15">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
+                            <label class="hrzn-fm">Cantidad</label>
+                        </div>
+                        <div class="col-lg-8 col-md-7 col-sm-7 col-xs-12">
+                            <div class="nk-int-st">
+                                <input id="quantity" value="0" name="quantity" type="number" min="0"
+                                    class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-example-int form-horizental mg-t-15">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
+                            <label class="hrzn-fm">Precio Unitario</label>
+                        </div>
+                        <div class="col-lg-8 col-md-7 col-sm-7 col-xs-12">
+                            <div class="nk-int-st">
+                                <input id="unit_price" value="0" name="unit_price" type="number" min="0"
+                                    class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-example-int form-horizental mg-t-15">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
+                            <label class="hrzn-fm">Total</label>
+                        </div>
+                        <div class="col-lg-8 col-md-7 col-sm-7 col-xs-12">
+                            <div class="nk-int-st">
+                                <input id="total" value="0" name="total" type="number" min="0" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-example-int mg-t-15">
+                <div class="row">
+                    <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
+                    </div>
+                    <div class="col-lg-8 col-md-7 col-sm-7 col-xs-12">
+                        <button class="btn btn-success notika-btn-success waves-effect">Registrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="creationModal" role="dialog">
+    <div class="modal-dialog modals-default">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h2>Registro de un Proveedor</h2>
+                <form method="POST" id="creation_form" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="name">RUC</label>
+                        <input type="text" class="form-control" id="ruc" name="ruc" placeholder="RUC" required>
+                        <p id="ruc_error" class="error"></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Razón Social</label>
+                        <input name="business_name" id="business_name" class="form-control" placeholder="Razón Social"
+                            cols="20" rows="5" required>
+                        <p id="business_name_error" class="error"></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Dirección</label>
+                        <input type="text" class="form-control" id="address" name="address" placeholder="Dirección"
+                            required>
+                        <p id="address_error" class="error"></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Teléfono</label>
+                        <input type="text" class="form-control" id="phone" name="phone" placeholder="Teléfono">
+                        <p id="phone_error" class="error"></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Correo Electrónico</label>
+                        <input type="email" class="form-control" id="email" name="email"
+                            placeholder="Correo Electrónico">
+                        <p id="email_error" class="error"></p>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" onclick="addNewSupplier();">Registrar</button>
+                <button type="button" class="btn btn-danger" onclick="closeCreationModal();">Cancelar</button>
+                <button id="close_modal_creation" type="button" hidden data-dismiss="modal">Hide</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}
+
+{% block extra_js %}
+<script src=" {% static 'js/datapicker/bootstrap-datepicker.js' %} "></script>
+<script src=" {% static 'js/datapicker/datepicker-active.js' %} "></script>
+<script type="text/javascript">
+    $('#date').datepicker();
+</script>
+<script src="{% static 'js/local/expense/new-expense.js' %}"></script>
+{% endblock extra_js %}

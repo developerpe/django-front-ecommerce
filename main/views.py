@@ -19,3 +19,7 @@ class IndicatorPageView(TemplateView):
 
 class ProductPageView(TemplateView):
     template_name = 'products/product.html'
+
+# EXPENSE TEMPLATES
+class ExpenseCreateView(TemplateView):
+    template_name = 'expense/new_expense.html'

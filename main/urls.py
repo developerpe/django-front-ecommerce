@@ -10,4 +10,6 @@ urlpatterns = [
     path('category-product/', CategoryProductPageView.as_view(), name='category_product'),
     path('indicator/', IndicatorPageView.as_view(), name='indicator'),
     path('product/', ProductPageView.as_view(), name='product'),
+    # expense
+    path('new-expense/', ExpenseCreateView.as_view(), name='new_expense')
 ]

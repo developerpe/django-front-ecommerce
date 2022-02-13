@@ -22,6 +22,7 @@
 		============================================ -->
     <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/meanmenu/meanmenu.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/chosen/chosen.css' %}">
     <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
     <link rel="stylesheet" href="{% static 'css/scrollbar/jquery.mCustomScrollbar.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/notika-custom-icon.css' %}">
@@ -57,9 +58,11 @@
                     <div class="header-top-menu">
                         <ul class="nav navbar-nav notika-top-nav">
                             <li class="nav-item dropdown">
-                                <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><span>
-                                    <button class="btn btn-default btn-icon-notika waves-effect"><i class="notika-icon notika-close"></i></button>
-                                </span></a>
+                                <a href="#" data-toggle="dropdown" role="button" aria-expanded="false"
+                                    class="nav-link dropdown-toggle"><span>
+                                        <button class="btn btn-default btn-icon-notika waves-effect"><i
+                                                class="notika-icon notika-close"></i></button>
+                                    </span></a>
                                 <div role="menu" class="dropdown-menu search-dd animated flipInX">
                                 </div>
                             </li>
@@ -80,17 +83,16 @@
                             <ul class="mobile-menu-nav">
                                 <li><a data-toggle="collapse" data-target="#Charts" href="#">Productos</a>
                                     <ul class="collapse dropdown-header-top">
-                                        <li><a href="index.html">Categoría de Productos</a></li>
-                                        <li><a href="index-2.html">Unidades de Medida</a></li>
-                                        <li><a href="index-3.html">Indicador</a></li>
-                                        <li><a href="index-4.html">Productos</a></li>
+                                        <li><a href=" {% url 'category_product' %} ">Categoría de Productos</a></li>
+                                        <li><a href=" {% url 'measure_unit' %} ">Unidades de Medida</a></li>
+                                        <li><a href=" {% url 'indicator' %} ">Indicador</a></li>
+                                        <li><a href=" {% url 'product' %} ">Productos</a></li>
                                     </ul>
                                 </li>
-                                <li><a data-toggle="collapse" data-target="#demoevent" href="#">Email</a>
+                                <li><a data-toggle="collapse" data-target="#demoevent" href="#">Gastos</a>
                                     <ul id="demoevent" class="collapse dropdown-header-top">
-                                        <li><a href="inbox.html">Inbox</a></li>
-                                        <li><a href="view-email.html">View Email</a></li>
-                                        <li><a href="compose-email.html">Compose Email</a></li>
+                                        <li><a href="{% url 'new_expense' %}">Registrar Facturas</a></li>
+                                        <li><a href="view-email.html">Listar Facturas</a></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -107,11 +109,12 @@
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <ul class="nav nav-tabs notika-menu-wrap menu-it-icon-pro">
-                        <li class="active"><a data-toggle="tab" href="#products"><i class="notika-icon notika-menus"></i>
+                        <li class="active"><a data-toggle="tab" href="#products"><i
+                                    class="notika-icon notika-menus"></i>
                                 Productos</a>
                         </li>
-                        <li><a data-toggle="tab" href="#mailbox"><i class="notika-icon notika-mail"></i> Email</a>
-                        </li>                        
+                        <li><a data-toggle="tab" href="#mailbox"><i class="notika-icon notika-mail"></i>Gastos</a>
+                        </li>
                     </ul>
                     <div class="tab-content custom-menu-content">
                         <div id="products" class="tab-pane in active notika-tab-menu-bg animated flipInX">
@@ -124,12 +127,8 @@
                         </div>
                         <div id="mailbox" class="tab-pane notika-tab-menu-bg animated flipInX">
                             <ul class="notika-main-menu-dropdown">
-                                <li><a href="inbox.html">Inbox</a>
-                                </li>
-                                <li><a href="view-email.html">View Email</a>
-                                </li>
-                                <li><a href="compose-email.html">Compose Email</a>
-                                </li>
+                                <li><a href="{% url 'new_expense' %}">Registrar Facturas</a></li>
+                                <li><a href="view-email.html">Listar Facturas</a></li>
                             </ul>
                         </div>
                     </div>
@@ -154,8 +153,7 @@
     <!-- jquery
 		============================================ -->
     <script src="{% static 'js/vendor/jquery-1.12.4.min.js' %}"></script>
-    <!-- bootstrap JS
-		============================================ -->
+    <script src=" {% static 'js/chosen/chosen.jquery.js' %} "></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/meanmenu/jquery.meanmenu.js' %}"></script>
     <script src="{% static 'js/scrollbar/jquery.mCustomScrollbar.concat.min.js' %}"></script>
