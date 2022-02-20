@@ -30,14 +30,14 @@
             <button type="button" class="btn btn-primary" onclick="searchSupplier();">Buscar</button>
         </div>
         <div class="col-lg-2 col-sm-2">
-            <button type="button" class="btn btn-primary hide" id="id_new_supplier" data-toggle="modal"
+            <button type="button" class="btn btn-primary" id="id_new_supplier" data-toggle="modal"
                 data-target="#creationModal">Registrar</button>
         </div>
     </div>
 </div>
 
 
-<div class="breadcomb-list" id="supplier_found" style="display: none;">
+<div class="breadcomb-list hide" id="supplier_found">
     <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
             <div class="breadcomb-wp">
@@ -46,14 +46,14 @@
                 </div>
                 <div class="breadcomb-ctn">
                     <h2 id="id_business_name">Felipe Perez</h2>
-                    <p id="ruc"> 646523132135 : <span class="bread-ntd" id="id_address">Av. Petituars 205</span></p>
+                    <p><span class="bread-ntd" id="ruc"></span> - <span class="bread-ntd" id="id_address"></span></p>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<div class="row">
+<div id="expense_form" class="row hide">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="form-example-wrap mg-t-30">
             <div class="cmp-tb-hd cmp-int-hd">
@@ -209,29 +209,29 @@
                     {% csrf_token %}
                     <div class="form-group">
                         <label for="name">RUC</label>
-                        <input type="text" class="form-control" id="ruc" name="ruc" placeholder="RUC" required>
+                        <input type="text" class="form-control" id="new_ruc" name="ruc" placeholder="RUC" required>
                         <p id="ruc_error" class="error"></p>
                     </div>
                     <div class="form-group">
                         <label for="description">Razón Social</label>
-                        <input name="business_name" id="business_name" class="form-control" placeholder="Razón Social"
-                            cols="20" rows="5" required>
+                        <input name="business_name" id="new_business_name" class="form-control"
+                            placeholder="Razón Social" cols="20" rows="5" required>
                         <p id="business_name_error" class="error"></p>
                     </div>
                     <div class="form-group">
                         <label for="description">Dirección</label>
-                        <input type="text" class="form-control" id="address" name="address" placeholder="Dirección"
+                        <input type="text" class="form-control" id="new_address" name="address" placeholder="Dirección"
                             required>
                         <p id="address_error" class="error"></p>
                     </div>
                     <div class="form-group">
                         <label for="description">Teléfono</label>
-                        <input type="text" class="form-control" id="phone" name="phone" placeholder="Teléfono">
+                        <input type="text" class="form-control" id="new_phone" name="phone" placeholder="Teléfono">
                         <p id="phone_error" class="error"></p>
                     </div>
                     <div class="form-group">
                         <label for="description">Correo Electrónico</label>
-                        <input type="email" class="form-control" id="email" name="email"
+                        <input type="email" class="form-control" id="new_email" name="email"
                             placeholder="Correo Electrónico">
                         <p id="email_error" class="error"></p>
                     </div>

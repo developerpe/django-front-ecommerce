@@ -1,6 +1,8 @@
 var base_API = 'http://localhost:8001/';
 var error = false;
 var temp_errors = {};
+var id_help = 0;
+
 
 function getToken() {
     return window.localStorage.getItem('token');
@@ -169,3 +171,4 @@ function fetchDelete(url){
         console.log(error);
     });
 }
+
