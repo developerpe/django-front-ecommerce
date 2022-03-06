@@ -1,4 +1,4 @@
-var id_supplier = '';
+var id_supplier = 0;
 
 function showForm(){
     let form = document.getElementById('expense_form');
@@ -7,6 +7,12 @@ function showForm(){
     loadPaymentType();
     loadProducts();
 }
+
+function hideForm(){
+    let form = document.getElementById('expense_form');
+    form.classList.add('hide');
+}
+
 
 function searchSupplier(){
     let error = false;
@@ -36,7 +42,7 @@ function searchSupplier(){
             if(error){
                 alert(data.mensaje);
             }else{
-                //showForm();
+                showForm();
                 id_supplier = data.id;
                 document.getElementById('id_business_name').innerHTML = data.business_name;
                 document.getElementById('ruc').innerHTML = data.ruc;
@@ -53,7 +59,7 @@ function searchSupplier(){
 }
 
 function loadPaymentType(){
-    fetch(base_API + 'products/category-products/get_categories/',{
+    fetch(base_API + 'expense/expense/get_payment_types/',{
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -69,10 +75,7 @@ function loadPaymentType(){
         select = document.getElementById('payment_type');
         
         for(let i = 0; i < data.length; i++){
-            let option = document.createElement('option');
-            if(data[i].id == id){
-                option.setAttribute('selected', 'selected');
-            }           
+            let option = document.createElement('option');  
             option.value = data[i].id;
             option.text = data[i].name;
             select.add(option);
@@ -85,7 +88,7 @@ function loadPaymentType(){
 }
 
 function loadVoucherType(){
-    fetch(base_API + 'products/category-products/get_categories/',{
+    fetch(base_API + 'expense/expense/get_vouchers/',{
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -101,10 +104,7 @@ function loadVoucherType(){
         select = document.getElementById('voucher');
         
         for(let i = 0; i < data.length; i++){
-            let option = document.createElement('option');
-            if(data[i].id == id){
-                option.setAttribute('selected', 'selected');
-            }           
+            let option = document.createElement('option');     
             option.value = data[i].id;
             option.text = data[i].name;
             select.add(option);
@@ -117,7 +117,7 @@ function loadVoucherType(){
 }
 
 function loadProducts(){
-    fetch(base_API + 'products/products/get_products/',{
+    fetch(base_API + 'expense/expense/get_products/',{
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -133,10 +133,7 @@ function loadProducts(){
         select = document.getElementById('product');
         
         for(let i = 0; i < data.length; i++){
-            let option = document.createElement('option');
-            if(data[i].id == id){
-                option.setAttribute('selected', 'selected');
-            }           
+            let option = document.createElement('option');      
             option.value = data[i].id;
             option.text = data[i].name;
             select.add(option);
@@ -180,7 +177,6 @@ function addNewSupplier(){
             showErrors(data.error);
             error = false;
         }else{
-            console.log(data);
             id_supplier = data.supplier.id;
             let found = document.getElementById('supplier_found');
             found.classList.remove('hide');
@@ -190,6 +186,53 @@ function addNewSupplier(){
             //alert(data.message);
             hideErrors();
             closeCreationModal();           
+        }
+    })
+    .catch(function(error){
+        console.log("RESPUESTA EN CATCH");
+        console.log(error);
+    });
+}
+
+function addNewExpense(){
+    let data = {
+        'supplier': id_supplier,
+        'voucher_number': document.getElementById('voucher_number').value,
+        'date': document.getElementById('date').value,
+        'product': document.getElementById('product').value,
+        'voucher': document.getElementById('voucher').value,
+        'payment_type': document.getElementById('payment_type').value,
+        'quantity': document.getElementById('quantity').value,
+        'unit_price': document.getElementById('unit_price').value,
+        'total': document.getElementById('total').value
+    };
+
+    temp_headers = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ' + getToken()
+    }
+    temp_body = JSON.stringify(data)
+
+    fetch(base_API + 'expense/expense/',{
+        method: 'POST',
+        headers: temp_headers,
+        body: temp_body
+    })
+    .then(function(response){
+        if(response.status == 400 || response.status == 401){
+            error = true;
+        }
+        return response.json();
+    })
+    .then(function(data){
+        if(error){
+            showErrors(data.errors);
+            error = false;
+        }else{
+            hideErrors();
+            hideForm();
+            alert(data.message);        
         }
     })
     .catch(function(error){

@@ -68,6 +68,7 @@
                         <div class="col-lg-8 col-md-7 col-sm-7 col-xs-12">
                             <div class="nk-int-st">
                                 <input id="voucher_number" name="voucher_number" type="text" class="form-control">
+                                <p id="voucher_number_error" class="error"></p>
                             </div>
                         </div>
                     </div>
@@ -82,6 +83,7 @@
                         <div class="col-lg-8 col-md-7 col-sm-7 col-xs-12">
                             <div class="nk-int-st">
                                 <input id="date" name="date" type="text" class="form-control" placeholder="dd/mm/yyyy">
+                                <p id="date_error" class="error"></p>
                             </div>
                         </div>
                     </div>
@@ -94,11 +96,10 @@
                             <label class="hrzn-fm">Producto</label>
                         </div>
                         <div class="col-lg-8 col-md-7 col-sm-7 col-xs-12">
-                            <div class="chosen-select-act fm-cmp-mg">
-                                <select id="product" name="product" class="chosen"
-                                    data-placeholder="Seleccione un Producto..." style="display: none;">
-                                </select>
-                            </div>
+                            <select id="product" name="product" class="form-control"
+                                data-placeholder="Seleccione un Producto..." >
+                            </select>
+                            <p id="product_error" class="error"></p>
                         </div>
                     </div>
                 </div>
@@ -110,13 +111,10 @@
                             <label class="hrzn-fm">Tipo de Comprobante</label>
                         </div>
                         <div class="col-lg-8 col-md-7 col-sm-7 col-xs-12">
-                            <div class="nk-int-st">
-                                <div class="chosen-select-act fm-cmp-mg">
-                                    <select class="form-control chosen" name="voucher" id="voucher"
-                                        data-placeholder="Seleccione un Tipo de Comprobante..." style="display: none;">
-                                    </select>
-                                </div>
-                            </div>
+                            <select class="form-control" name="voucher" id="voucher"
+                                data-placeholder="Seleccione un Tipo de Comprobante...">
+                            </select>
+                            <p id="voucher_error" class="error"></p>
                         </div>
                     </div>
                 </div>
@@ -128,14 +126,10 @@
                             <label class="hrzn-fm">Medio de Pago</label>
                         </div>
                         <div class="col-lg-8 col-md-7 col-sm-7 col-xs-12">
-                            <div class="nk-int-st">
-                                <div class="chosen-select-act fm-cmp-mg">
-                                    <select class="form-control chosen" name="payment_type" id="payment_type"
-                                        data-placeholder="Seleccione un Medio de Pago..." style="display: none;">
-                                    </select>
-                                </div>
-
-                            </div>
+                            <select class="form-control" name="payment_type" id="payment_type"
+                                data-placeholder="Seleccione un Medio de Pago...">
+                            </select>
+                            <p id="payment_type_error" class="error"></p>
                         </div>
                     </div>
                 </div>
@@ -150,6 +144,7 @@
                             <div class="nk-int-st">
                                 <input id="quantity" value="0" name="quantity" type="number" min="0"
                                     class="form-control">
+                                    <p id="quantity_error" class="error"></p>
                             </div>
                         </div>
                     </div>
@@ -165,6 +160,7 @@
                             <div class="nk-int-st">
                                 <input id="unit_price" value="0" name="unit_price" type="number" min="0"
                                     class="form-control">
+                                    <p id="unit_price_error" class="error"></p>
                             </div>
                         </div>
                     </div>
@@ -179,6 +175,7 @@
                         <div class="col-lg-8 col-md-7 col-sm-7 col-xs-12">
                             <div class="nk-int-st">
                                 <input id="total" value="0" name="total" type="number" min="0" class="form-control">
+                                <p id="total_error" class="error"></p>
                             </div>
                         </div>
                     </div>
@@ -189,7 +186,7 @@
                     <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
                     </div>
                     <div class="col-lg-8 col-md-7 col-sm-7 col-xs-12">
-                        <button class="btn btn-success notika-btn-success waves-effect">Registrar</button>
+                        <button class="btn btn-success notika-btn-success waves-effect" onclick="addNewExpense();">Registrar</button>
                     </div>
                 </div>
             </div>
@@ -252,7 +249,7 @@
 <script src=" {% static 'js/datapicker/bootstrap-datepicker.js' %} "></script>
 <script src=" {% static 'js/datapicker/datepicker-active.js' %} "></script>
 <script type="text/javascript">
-    $('#date').datepicker();
+    $('#date').datepicker({ dateFormat: 'yy-mm-dd' });
 </script>
 <script src="{% static 'js/local/expense/new-expense.js' %}"></script>
 {% endblock extra_js %}
